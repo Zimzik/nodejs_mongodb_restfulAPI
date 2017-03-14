@@ -3,7 +3,6 @@
 angular.module("SomeApp", [])
   .controller("SomeAppCtrl", function($scope, $http) {
   
-/*  $scope.logged = false;*/
   $scope.loginWindow = false;
   $scope.registerWindow = false;
   $scope.activeUser;
@@ -74,7 +73,9 @@ if ($scope.logged == false) {
     $scope.loginWindow = false;
     $scope.registerWindow = true;
   }
-
+  
+/*=============Login============*/
+  
   $scope.login = function () {
     $http({
       method: "POST",
@@ -102,6 +103,8 @@ if ($scope.logged == false) {
       console.log("Login error: " + res);
     }
   }
+  
+  /*===================Registration====================*/
   
   $scope.registration = function() {
     $scope.regWarning.passConfWarning = false;
@@ -133,48 +136,5 @@ if ($scope.logged == false) {
         $scope.regWarning.passConfWarning = true;
     }
   }
-/*
-  $scope.logOff = function () {
-    $scope.logged = false;
-    $scope.loginWindow = true;
-  }
-
-  $scope.registration = function () {
-    $scope.regWarning.nameWarning = false;
-    $scope.regWarning.passConfWarning = false;
-    $scope.regWarning.passWarning = false;
-    $scope.regWarning.newUserCreated = false;
-    let isLoginMatch = false;
-
-    $scope.users.some(function (el) {
-      console.log(el);
-      console.log($scope.userInfo.userLogin);
-      if (el.login.toLowerCase() == $scope.userInfo.userLogin.toLowerCase()) {
-        $scope.regWarning.nameWarning = true;
-        console.log("Logins is matching");
-        isLoginMatch = true;
-        return true;
-      };
-    });
-
-    if (!isLoginMatch) {
-      if ($scope.userInfo.userPass.length < 3) {
-        $scope.regWarning.passWarning = true;
-      } else {
-        $scope.regWarning.passWarning = false;
-        if ($scope.userInfo.userPass == $scope.userInfo.confUserPass) {
-          $scope.users.push({
-            login: $scope.userInfo.userLogin,
-            pass: $scope.userInfo.userPass
-          });
-          $scope.regWarning.newUserCreated = true;
-          console.log($scope.users);
-          $scope.clearUserInfo();
-        } else {
-          $scope.regWarning.passConfWarning = true;
-        }
-      }
-    }
-  }*/
 }
 });
