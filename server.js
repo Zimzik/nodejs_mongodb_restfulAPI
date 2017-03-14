@@ -1,5 +1,6 @@
 var express     = require('express');
 var app         = express();
+var pass        = require('path');
 var bodyParser  = require('body-parser');
 var morgan      = require('morgan');
 var mongoose    = require('mongoose');
@@ -18,10 +19,12 @@ app.use(morgan('dev'));
  
 // Use the passport package in our application
 app.use(passport.initialize());
+
+app.use(express.static(__dirname + '/views'));
  
 // demo Route (GET http://localhost:8080)
 app.get('/', function(req, res) {
-  res.send('Hello! The API is at http://localhost:' + port + '/api');
+  res.sendFile('index.html');
 });
  
 // connect to database
@@ -47,7 +50,7 @@ apiRoutes.post('/signup', function(req, res) {
       if (err) {
         return res.json({success: false, msg: 'Username already exists.'});
       }
-      res.json({success: true, msg: 'Successful created new user.'});
+      res.json({success: true, msg: 'Successfully created new user.'});
     });
   }
 });
@@ -90,7 +93,7 @@ apiRoutes.get('/memberinfo', passport.authenticate('jwt', { session: false}), fu
         if (!user) {
           return res.status(403).send({success: false, msg: 'Authentication failed. User not found.'});
         } else {
-          res.json({success: true, msg: 'Welcome in the member area ' + user.name + '!'});
+          res.json({success: true, msg: 'Welcome in the member area ' + user.name + '!', user: user.name});
         }
     });
   } else {
